@@ -24,7 +24,7 @@ const compra = () => {
 
     let desejaComprarMais = read.question('Deseja inserir mais algum produto no carrinho? Se sim digite 1, se não 2:')
 
-    let inputCupom = ('Possui algum cupom de desconto? Se sim, digite o valor:')
+    let inputCupom = parseInt(read.question('Possui algum cupom de desconto? Se sim, digite o valor:'))
 
     carrinho.push(inputId)
 
@@ -39,7 +39,6 @@ const compra = () => {
 
 compra()
 
-console.log(carrinho)
 /* let inputId = parseInt(read.question('Digite a id do produto desejado: '))
 let inputQty = parseInt(read.question('Digite a quantidade que gostaria de adquirir: '))
 
@@ -88,3 +87,47 @@ console.log(pedido1)
 
    // Perguntar se a cliente possui cupom de desconto.
  
+//pra fazer o valor total tem que fazer o reduce
+
+//const valorFinal []
+//const valorTotal = (acumulad)
+
+
+
+
+const db = require('./database')
+const read = require('readline-sync')
+
+// Listar no console uma tabela contendo os produtos em ordem crescente de preço (do menor ao maior)
+const { produtos } = db
+
+produtos.sort((a, b) => a.preco - b.preco)
+
+console.table(produtos) 
+
+
+// Receber via terminal as entradas de id e quantidade dos produtos a serem adquiridos.
+/* const carrinho = []
+
+const compra = () => {
+    const inputId = parseInt(read.question('Por favor, informe o id do produto desejado:'))
+
+    const inputQuantidade = parseInt(read.question('Agora informe a quantidade do produto desejado:'))
+
+    let desejaComprarMais = read.question('Deseja inserir mais algum produto no carrinho? Se sim digite 1, se não 2:')
+
+    let inputCupom = ('Possui algum cupom de desconto? Se sim, digite o valor:')
+
+    carrinho.push(inputId)
+
+    if (desejaComprarMais == 1) {
+        return compra()
+    } else {
+        return parseInt(read.question(inputCupom))
+    }
+
+
+}
+
+compra()
+ */
