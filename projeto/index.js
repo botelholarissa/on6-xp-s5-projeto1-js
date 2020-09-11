@@ -95,8 +95,3 @@ console.log(`Subtotal: R$ ${purchase.subtotal.toFixed(2)}`)
 purchase.calcDiscount(percentage)
 purchase.calcTotal()
 console.log(`Total: R$ ${purchase.total.toFixed(2)}`) 
-
-/* impressões de teste
-
-console.log(percentage)
-console.log(coupon) */
