@@ -16,13 +16,13 @@ class Purchase {
         this.subtotal = 0
         this.discount = 0
         this.total = 0
-        this.date = new Date().toLocaleDateString('pt-BR')
+        this.day = new Date().toLocaleDateString('pt-BR')
     }
 
     addProduct(id, quantity) {
         const product = produtos.filter(item => item.id === id)
-        if(typeof produto[0] != 'undefined') {
-            this.products.push(produto[0])
+        if(typeof product[0] != 'undefined') {
+            this.products.push(product[0])
             this.quantity.push(quantity)
         } else {
             console.log("Digite um produto existente na lista.")
@@ -30,11 +30,11 @@ class Purchase {
     }
 
     calcSubtotal(){
-        for(let item = 0; item < this.produtos.length ; item++) 
-            this.subtotal =+ this.subtotal + (parseFloat(this.products[i].preco) * this.quantity[i])
+        for(let item = 0; item < this.products.length ; item++) 
+            this.subtotal =+ this.subtotal + (parseFloat(this.products[item].preco) * this.quantity[item])
     }
 
-    calcDiscount(porcentagem) {
+    calcDiscount(coupon) {
         this.discount = this.subtotal * percentage/100
     }
 
@@ -44,19 +44,59 @@ class Purchase {
 
     displayCart() {
         let order = []
-        for(let item = 0; item < this.produtos.length; item++) {
-            pedido = {
-                id: this.produtos[item].id,
-                data: this.data,
-                nome: this.produtos[item].nome,
-                descricao: this.produtos[item].descricao,
-                categoria: this.produtos[item].categoria,
-                preco: this.produtos[item].preco,
-                quantidade: this.quantidade[item],
+        for(let item = 0; item < this.products.length; item++) {
+            let newOrder = {
+                id: this.products[item].id,
+                data: this.day,
+                nome: this.products[item].nome,
+                descricao: this.products[item].descricao,
+                categoria: this.products[item].categoria,
+                preco: this.products[item].preco,
+                quantidade: this.quantity[item],
             }
-            order.push(pedido)
+            order.push(newOrder)
         }
         console.table(order)
     }
 }
 
+const purchase = new Purchase();
+let addProduct 
+do {
+    const id = parseInt(read.question("Por favor, informe a id do produto desejado: "))
+
+    let quantity
+    do {
+        quantity = parseInt(read.question("Agora informa a quantidade desejada: "))
+        if(quantity < 1)
+            console.log("Quantidade inválida.")
+    } while(quantity < 1)
+
+    purchase.addProduct(id, quantity)
+
+} while(read.question("Deseja adicionar mais algum produto? S ou N ").toUpperCase() != 'N')
+
+const coupon = parseInt(read.question('Possui algum cupom de desconto? Se sim, digite o valor:'))
+
+let percentage = 0
+if (coupon > 0 && coupon <= 15){
+    percentage = coupon
+    console.log(`Você tem ${coupon}% de desconto`)
+} else {
+    console.log(`Você não tem desconto.`)
+}
+
+
+purchase.displayCart()
+
+purchase.calcSubtotal()
+console.log(`Subtotal: R$ ${purchase.subtotal.toFixed(2)}`)
+
+purchase.calcDiscount(percentage)
+purchase.calcTotal()
+console.log(`Total: R$ ${purchase.total.toFixed(2)}`) 
+
+/* impressões de teste
+
+console.log(percentage)
+console.log(coupon) */
